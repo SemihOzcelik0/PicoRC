@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="refresh" content="0.2"> -->
+    <title>D.O.T.S Telemetry Panel</title>
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            src: url('fonts/Roboto-Regular.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 67.5%;
+        }
+
+        body {
+            background-color: #333;
+            font-family: 'Roboto', sans-serif;
+            height: 100%;
+            width: 100%;
+        }
+
+        #header {
+            width: 992px;
+            margin: 3rem auto;
+        }
+
+        #header h1 {
+            border: 2px solid #00cc00;
+            color: #eeeeee;
+            padding: 1rem 0;
+            text-align: center;
+            font-size: 1.9rem;
+            letter-spacing: 3px;
+
+        }
+
+        /* Elevator */
+
+        main {
+            position: relative;
+            padding: 1rem 10rem;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            width: 992px;
+            margin: 0 auto;
+        }
+
+        #mid_area {
+            width: 400px;
+            height: 280px;
+            /* border-right: 2px dashed #0f0;
+    border-left: 2px dashed #0f0; */
+            position: relative;
+
+        }
+
+        .main-markings1 {
+            height: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-left: 2px dashed #0f0;
+        }
+
+        .main-markings2 {
+            height: 100%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border-left: 2px dashed #0f0;
+        }
+
+        .main-indicator {
+            position: absolute;
+            bottom: 0;
+            width: 20%;
+            height: 1px;
+            background-color: #0f0;
+            transform-origin: bottom;
+            transition: transform 0.5s;
+            color: #0f0;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+        }
+
+        #main_indicator1 {
+            left: 10px;
+            text-align: left;
+        }
+
+        #main_indicator2 {
+            right: 10px;
+            text-align: right;
+        }
+
+        /* Aileron */
+
+        /* #main_aileron{
+    width: 60px;
+    height: 1px;
+    background-color: #0f0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) rotate(0deg);
+} */
+
+        #main_aileron .square {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #0f0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(90deg);
+
+        }
+
+        #main_aileron .square::before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            bottom: 19px;
+            width: 30px;
+            height: 30%;
+            border-bottom: 1px solid #0f0;
+            transform: translateY(-50%) rotate(-45deg);
+        }
+
+        #main_aileron .square::after {
+            content: "";
+            position: absolute;
+            right: 8px;
+            bottom: -14px;
+            width: 30px;
+            height: 30%;
+            border-bottom: 1px solid #0f0;
+            transform: translateY(-50%) rotate(-45deg);
+        }
+
+        /* Altitude & Speed */
+
+        .hud-panel {
+            position: relative;
+            width: 70px;
+            height: 300px;
+            background-color: #222;
+            border-radius: 0 0 5px 5px;
+            overflow: hidden;
+        }
+
+        .hud-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #0f0;
+            transform-origin: bottom;
+            transition: transform 0.5s;
+            color: #0f0;
+            text-align: center;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+        }
+
+        .hud-markings {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .alt_header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #eeeeee;
+            border: 1px solid #eeeeee;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 992px) {
+            main {
+                width: 100%;
+            }
+
+            #header {
+                margin: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section id="header">
+        <h1>Flight Control Panel</h1>
+    </section>
+
+    <main>
+        <div class="hud-panel">
+            <div class="hud-indicator" id="altitude">75</div>
+            <div class="hud-markings" style="border-right: 1px dashed #0f0"></div>
+            <div class="alt_header">Altitude</div>
+        </div>
+        <section id="mid_area">
+            <div class="main-markings1"></div>
+            <div class="main-indicator" id="main_indicator1">0</div>
+            <div class="main-aileron" id="main_aileron">
+                <div class="square" id="sqr"></div>
+            </div>
+            <div class="main-markings2"></div>
+            <div class="main-indicator" id="main_indicator2">0</div>
+        </section>
+        <div class="hud-panel">
+            <div class="hud-indicator" id="kmh">60</div>
+            <div class="hud-markings" style="border-left: 1px dashed #0f0"></div>
+            <div class="alt_header">Speed</div>
+        </div>
+
+    </main>
+    <p id="aileron_deg" style="display: none;">45</p>
+
+    <script>
+        const alt = document.getElementById("altitude");
+        const spd = document.getElementById("kmh");
+        const main_1 = document.getElementById("main_indicator1");
+        const main_2 = document.getElementById("main_indicator2");
+        const aileron = document.getElementById('sqr')
+        const aileron_deg = document.getElementById('aileron_deg').textContent;
+
+
+        function setHUDAltitude(altitude) {
+            alt.style.transform = `translateY(-${altitude *= 2}px)`;
+
+            if (alt.textContent >= 120) {
+                alt.style.color = '#FF0000';
+                alt.style.backgroundColor = '#FF0000';
+            }
+            else if (alt.textContent >= 80 && alt.textContent < 120) {
+                alt.style.color = '#FFFF00';
+                alt.style.backgroundColor = '#FFFF00';
+            }
+        }
+
+        function setHUDSpeed(speed) {
+            spd.style.transform = `translateY(-${speed *= 2.5}px)`;
+
+            if (spd.textContent >= 90) {
+                spd.style.color = '#FF0000';
+                spd.style.backgroundColor = '#FF0000';
+            }
+            else if (spd.textContent >= 70 && spd.textContent < 90) {
+                spd.style.color = '#FFFF00';
+                spd.style.backgroundColor = '#FFFF00';
+            }
+        }
+
+        function setElevator(elevator) {
+            let anan = Number(elevator)
+            let out = ((anan - (-90)) * (280 - 0)) / (90 - -90) + 0;
+            main_1.style.transform = `translateY(-${Math.ceil(out)}px)`;
+            main_2.style.transform = `translateY(-${Math.ceil(out)}px)`;
+        }
+
+        setHUDSpeed(spd.textContent);
+        setHUDAltitude(alt.textContent);
+        setElevator(main_1.textContent)
+        aileron.style.transform = `translate(-50%,-50%) rotate(${aileron_deg + "deg"})`;
+    </script>
+</body>
+
+</html>
